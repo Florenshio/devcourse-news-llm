@@ -63,7 +63,6 @@ async def summarize_article(article: ArticleRequest) -> ArticleResponse:
         # Prepare the prompt
         user_prompt = f"""
 Original Title: {article.title}
-Original URL: {article.url if article.url else 'Not provided'}
 
 Original Content:
 {article.content}
@@ -74,8 +73,8 @@ Return ONLY a valid JSON object with 'summarized_title' and 'summarized_content'
 
         # Call Claude API
         response = await client.messages.create(
-            model="claude-3-opus-20240229",
-            max_tokens=1024,
+            model="claude-3-7-sonnet-latest",
+            max_tokens=4096,
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": user_prompt}]
         )
